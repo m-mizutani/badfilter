@@ -30,8 +30,8 @@ build: $(BINPATH)
 
 $(CWD)/build/updater: $(CODE_DIR)/lambda/updater/*.go $(INTERNAL)
 	cd $(CODE_DIR) && env GOARCH=amd64 GOOS=linux go build -v $(BUILD_OPT) -o $(CWD)/build/updater $(CODE_DIR)/lambda/updater && cd $(CWD)
-$(CWD)/build/matcher: $(CODE_DIR)/lambda/matcher/*.go $(INTERNAL)
-	cd $(CODE_DIR) && env GOARCH=amd64 GOOS=linux go build -v $(BUILD_OPT) -o $(CWD)/build/matcher $(CODE_DIR)/lambda/matcher && cd $(CWD)
+$(CWD)/build/matcher: $(CODE_DIR) ./*.go $(CODE_DIR)/pkg/matcher/*.go $(INTERNAL)
+	cd $(CODE_DIR) && env GOARCH=amd64 GOOS=linux go build -v $(BUILD_OPT) -o $(CWD)/build/matcher $(CODE_DIR) && cd $(CWD)
 
 $(TEMPLATE_FILE): $(SAM_CONFIG) $(BASE_FILE)
 	jsonnet -J $(CODE_DIR) $(SAM_CONFIG) -o $(TEMPLATE_FILE)
